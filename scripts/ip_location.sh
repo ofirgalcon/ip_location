@@ -43,7 +43,12 @@ if ! validate_ip "$wanIP"; then
     exit 1
 fi
 
-lastWanIP=$(defaults read "$prefs" LastIP)
+# Check if LastIP exists, else set to empty string
+if defaults read "$prefs" LastIP &>/dev/null; then
+    lastWanIP=$(defaults read "$prefs" LastIP)
+else
+    lastWanIP=""
+fi
 
 if [ "$wanIP" = "$lastWanIP" ]; then
     echo "No change in IP address"
