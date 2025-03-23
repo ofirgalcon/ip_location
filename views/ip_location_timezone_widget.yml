@@ -1,0 +1,8 @@
+type: scrollbox
+widget_id: ip_location-timezone-scrollbox-widget
+api_url: /module/ip_location/get_list/timezone
+i18n_title: ip_location.widget.timezone_title
+icon: fa-clock-o
+listing_link: /show/listing/ip_location/ip_location
+search_key: label
+badge: count

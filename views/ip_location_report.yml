@@ -1,0 +1,7 @@
+row1:
+    ip_location_city: {  }
+    ip_location_region: {  }
+    ip_location_country: {  }
+    ip_location_organization: {  }
+    # ip_location_postal_code: {  }
+    ip_location_timezone: {  }

@@ -1,0 +1,9 @@
+type: scrollbox
+widget_id: ip_location-postal_code-scrollbox-widget
+api_url: /module/ip_location/get_list/postal_code
+i18n_title: ip_location.widget.postal_code_title
+icon: fa-envelope-o
+listing_link: /show/listing/ip_location/ip_location
+search_key: label
+badge: count
+i18n_empty_result: no_data

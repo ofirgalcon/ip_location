@@ -1,0 +1,8 @@
+type: scrollbox
+widget_id: ip_location-country-scrollbox-widget
+api_url: /module/ip_location/get_list/country
+i18n_title: ip_location.widget.country_title
+icon: fa-globe
+listing_link: /show/listing/ip_location/ip_location
+search_key: label
+badge: count

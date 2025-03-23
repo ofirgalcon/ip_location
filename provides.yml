@@ -1,0 +1,26 @@
+client_tabs:
+    ip_location:
+        view: ip_location_tab
+        i18n: ip_location.title
+        badge: ip-location-cnt
+listings:
+    ip_location:
+        view: ip_location_listing
+        i18n: ip_location.listing.title
+reports:
+    ip_location:
+        view: ip_location_report
+        i18n: ip_location.report.title
+widgets:
+    ip_location_city:
+        view: ip_location_city_widget
+    ip_location_region:
+        view: ip_location_region_widget
+    ip_location_country:
+        view: ip_location_country_widget
+    ip_location_organization:
+        view: ip_location_organization_widget
+    ip_location_postal_code:
+        view: ip_location_postal_code_widget
+    ip_location_timezone:
+        view: ip_location_timezone_widget

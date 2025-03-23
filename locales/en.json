@@ -1,0 +1,33 @@
+{
+    "column": {
+        "ip": "IP address",
+        "hostname": "Hostname",
+        "city": "City",
+        "region": "Region",
+        "country": "Country",
+        "location": "Location",
+        "organization": "ISP",
+        "postal_code": "Postal Code",
+        "timezone": "Timezone",
+        "no_data": ""
+    },
+    "listing": {
+        "title": "IP Location"
+    },
+    "report": {
+        "title": "IP Location Report"
+    },
+    "title": "IP Location",
+    "widget": {
+        "ip_title": "IP address",
+        "hostname_title": "Hostname",
+        "city_title": "City",
+        "region_title": "Region",
+        "country_title": "Country",
+        "location_title": "Location",
+        "organization_title": "ISP",
+        "postal_code_title": "Postal Code",
+        "timezone_title": "Timezone"
+    },
+    "no_data": ""
+}

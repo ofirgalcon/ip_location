@@ -1,0 +1,8 @@
+type: scrollbox
+widget_id: ip_location-organization-scrollbox-widget
+api_url: /module/ip_location/get_list/organization
+i18n_title: ip_location.widget.organization_title
+icon: fa-building-o
+listing_link: /show/listing/ip_location/ip_location
+search_key: label
+badge: count

@@ -1,0 +1,27 @@
+i18n_title: ip_location.listing.title
+not_null_column: ip
+table:
+    -   column: machine.computer_name
+        i18n_header: listing.computername
+        formatter: clientDetail
+        tab_link: ip_location
+    -   column: reportdata.serial_number
+        i18n_header: serial
+    -   column: ip_location.ip
+        i18n_header: ip_location.column.ip
+    # -   column: ip_location.hostname
+        # i18n_header: ip_location.column.hostname
+    -   column: ip_location.city
+        i18n_header: ip_location.column.city
+    -   column: ip_location.region
+        i18n_header: ip_location.column.region
+    -   column: ip_location.country
+        i18n_header: ip_location.column.country
+    # -   column: ip_location.location
+        # i18n_header: ip_location.column.location
+    -   column: ip_location.postal_code
+        i18n_header: ip_location.column.postal_code
+    -   column: ip_location.organization
+        i18n_header: ip_location.column.organization
+    -   column: ip_location.timezone
+        i18n_header: ip_location.column.timezone
