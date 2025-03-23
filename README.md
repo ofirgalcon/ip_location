@@ -7,16 +7,17 @@ Data can be viewed under the IP Location tab on the client details page or using
 
 Configuration
 ---
-This module uses the [ifconfig.co](https://ifconfig.co/) API to gather location data. You will need to:
+This module uses the [ipinfo.io](https://ipinfo.io/) API to gather location data. You will need to:
 
-1. Register for an API token at https://ifconfig.co/
-2. Add your token to the MunkiReport configuration:
-   ```php
-   $conf['ifconfig_token'] = 'your_token_here';
+1. Register for an API token at https://ipinfo.io/
+2. Create a plist file at `/Library/Preferences/com.gal.iplocation.plist` with your token:
+   ```bash
+   sudo defaults write /Library/Preferences/com.gal.iplocation.plist Token "your_token_here"
    ```
 
 Table Schema
 ---
+
 * ip - varchar(255) - IP address
 * hostname - varchar(255) - Hostname
 * city - varchar(255) - City
@@ -30,9 +31,10 @@ Table Schema
 Widgets
 ---
 This module provides the following widgets:
+
 * IP Location City
 * IP Location Region
 * IP Location Country
 * IP Location Organization
 * IP Location Postal Code
-* IP Location Timezone 
+* IP Location Timezone
