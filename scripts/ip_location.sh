@@ -11,9 +11,18 @@ SEPARATOR=' = '
 prefs="/Library/Preferences/com.gal.iplocation.plist"
 token=$(defaults read $prefs Token)
 
-# Function to extract value from JSON
+# Function to extract value from JSON - improved version
 extract_value() {
-    echo "$1" | sed -n 's/.*"'$2'": "\(.*\)".*/\1/p'
+    local json_data="$1"
+    local key="$2"
+    
+    # Try using jq if available (more reliable)
+    if command -v jq >/dev/null 2>&1; then
+        echo "$json_data" | jq -r ".$key" 2>/dev/null | grep -v "^null$" || echo ""
+    else
+        # Fallback to improved regex that handles quotes better
+        echo "$json_data" | sed -n 's/.*"'$key'": *"\([^"]*\)".*/\1/p' | sed 's/\\"/"/g'
+    fi
 }
 
 # Improved IP validation function
@@ -50,15 +59,33 @@ else
     lastWanIP=""
 fi
 
-if [ "$wanIP" = "$lastWanIP" ]; then
-    echo "No change in IP address"
+# Check if force refresh is requested
+FORCE_REFRESH="${FORCE_REFRESH:-0}"
+
+# Determine if we should fetch new location data
+should_fetch_data=false
+
+if [ "$FORCE_REFRESH" = "1" ]; then
+    echo "Force refresh requested - fetching new location data"
+    should_fetch_data=true
+elif [ "$wanIP" != "$lastWanIP" ]; then
+    echo "IP address changed from $lastWanIP to $wanIP - fetching new location data"
+    should_fetch_data=true
 else
+    echo "No change in IP address ($wanIP) - skipping location data fetch"
+    exit 0
+fi
+
+if [ "$should_fetch_data" = "true" ]; then
     defaults write "$prefs" LastIP "$wanIP"
     cmd="https://ipinfo.io/$wanIP?token=$token"
     json_data=$(curl -s -m 10 --retry 3 "$cmd") || {
         echo "Error: Failed to fetch location data"
         exit 1
     }
+
+
+
 
     # Assign values to variables
     IP=$(extract_value "$json_data" "ip")
@@ -69,6 +96,7 @@ else
         exit 1
     fi
 
+    # Extract all values with validation
     HOSTNAME=$(extract_value "$json_data" "hostname")
     CITY=$(extract_value "$json_data" "city")
     REGION=$(extract_value "$json_data" "region")
@@ -78,6 +106,13 @@ else
     POSTAL_CODE=$(extract_value "$json_data" "postal")
     TIMEZONE=$(extract_value "$json_data" "timezone")
 
+    # Validate that we got meaningful data
+    if [ -z "$CITY" ] && [ -z "$COUNTRY" ]; then
+        echo "Error: Failed to extract location data from JSON response"
+        echo "JSON response: $json_data"
+        exit 1
+    fi
+
     # Clean empty values
     clean_value() {
         [ -z "$1" ] && echo "N/A" || echo "$1"
@@ -86,6 +121,7 @@ else
     # Output data with timestamp
     {
         echo "timestamp${SEPARATOR}$(date '+%Y-%m-%d %H:%M:%S')"
+        echo "last_update${SEPARATOR}$(date +%s)"
         echo "ip${SEPARATOR}${IP}"
         echo "hostname${SEPARATOR}$(clean_value "${HOSTNAME}")"
         echo "city${SEPARATOR}$(clean_value "${CITY}")"

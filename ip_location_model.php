@@ -19,6 +19,7 @@ class Ip_location_model extends Eloquent
       'organization',
       'postal_code',
       'timezone',
+      'last_update',
 
     ];
 }

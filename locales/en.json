@@ -9,6 +9,7 @@
         "organization": "ISP",
         "postal_code": "Postal Code",
         "timezone": "Timezone",
+        "last_update": "Last IP Change",
         "no_data": ""
     },
     "listing": {

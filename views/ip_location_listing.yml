@@ -25,3 +25,6 @@ table:
         i18n_header: ip_location.column.organization
     -   column: ip_location.timezone
         i18n_header: ip_location.column.timezone
+    -   column: ip_location.last_update
+        i18n_header: ip_location.column.last_update
+        formatter: timestampToMoment

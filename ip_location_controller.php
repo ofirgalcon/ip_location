@@ -35,15 +35,35 @@ class Ip_location_controller extends Module_controller
 
     public function get_list($column = '')
     {
-        jsonView(
-            Ip_location_model::select("ip_location.$column AS label")
-                ->selectRaw('count(*) AS count')
-                ->filter()
-                ->whereRaw("ip_location.$column IS NOT NULL AND ip_location.$column <> ''")
-                ->groupBy($column)
-                ->orderBy('count', 'desc')
-                ->get()
-                ->toArray()
-        );
+        try {
+            // Sanitize input
+            $column = preg_replace("/[^A-Za-z0-9_\-]+/", '', $column);
+            
+            // Whitelist allowed columns to prevent column injection
+            $allowed_columns = [
+                'ip', 'hostname', 'city', 'region', 'country', 'location',
+                'organization', 'postal_code', 'timezone'
+            ];
+            
+            if (!in_array($column, $allowed_columns)) {
+                jsonView([['label' => "Column '$column' rejected", 'count' => 0]]);
+                return;
+            }
+            
+            // Use the model with filter() like other working controllers
+            jsonView(
+                Ip_location_model::selectRaw("$column AS label, count(*) AS count")
+                    ->whereNotNull($column)
+                    ->where($column, '<>', '')
+                    ->filter()
+                    ->groupBy($column)
+                    ->orderBy('count', 'desc')
+                    ->limit(10)
+                    ->get()
+                    ->toArray()
+            );
+        } catch (Exception $e) {
+            jsonView([['label' => 'Error: ' . $e->getMessage(), 'count' => 0]]);
+        }
     }
 } 

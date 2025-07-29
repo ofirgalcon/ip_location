@@ -12,8 +12,11 @@ class Ip_location_processor extends Processor
         $sep = ' = ';
 		foreach(explode(PHP_EOL, $data) as $line) {
             if($line){
-                list($key, $val) = explode($sep, $line);
-                $modelData[$key] = $val;
+                $parts = explode($sep, $line, 2); // Limit to 2 parts to handle values with = in them
+                if (count($parts) == 2) {
+                    list($key, $val) = $parts;
+                    $modelData[$key] = $val;
+                }
             }
 		} //end foreach explode lines
 

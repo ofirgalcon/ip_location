@@ -73,7 +73,13 @@ $(document).on('appReady', function(){
                 } else {
                     td.text(val);
                 }
-            } else {
+            }
+            // For last_update field, format as relative time
+            else if (key === 'last_update' && val) {
+                var date = moment.unix(val);
+                td.html('<span title="' + date.format('llll') + '">' + date.fromNow() + '</span>');
+            }
+            else {
                 td.text(val);
             }
             
